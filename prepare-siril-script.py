@@ -63,16 +63,16 @@ if __name__ == "__main__":
                       metavar='DeepSpace Object Name',
                       type=str,
                       help="Specify the mandatory name of the deep sky object name")
-  parser.add_argument('-E',
-          		'--extract-ha-oiii',
+  parser.add_argument('-S',
+          		'--sigma-clipping',
           		type=str,
           		dest='sigmaclip',
           		required=False,
           		default="5,2",
           		help='Specify custom sigma low,high clipping parameters (format is #,#)'
           		)
-  parser.add_argument('-S',
-          		'--sigma-clipping',
+  parser.add_argument('-E',
+          		'--extract-ha-oiii',
           		action='store_true',
           		dest='extract_ha_oiii',
           		required=False,
