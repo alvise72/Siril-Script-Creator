@@ -152,7 +152,7 @@ if __name__ == "__main__":
         output += " -dark=master-%s" %options.dark.rstrip('/')
     if options.flat is not None:
       output += " -flat=master-%s" %options.flat.rstrip('/')
-    output += "  -cfa -equalize_cfa -debayer -prefix=cal_ "
+    output += " -cfa -equalize_cfa -prefix=cal_ "
     output += "\nregister cal_%s -prefix=reg_" %options.light.rstrip('/')
     output += "\nstack reg_cal_%s rej 3 4 -norm=addscale -output_norm -out=%s" %(options.light.rstrip('/'), options.dsoname)
   else:
