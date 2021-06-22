@@ -170,7 +170,7 @@ if __name__ == "__main__":
     
     # extract_HaOIII pp_light
     if options.extract_ha_oiii==True:
-      output += "\nextract_HaOIII cal_%s" %options.light.rstrip('/')
+      output += "\nseqextract_HaOIII cal_%s" %options.light.rstrip('/')
       output += "\nregister Ha_cal_%s -prefix=reg_" %options.light.rstrip('/')
       output += "\nregister OIII_cal_%s -prefix=reg_" %options.light.rstrip('/')
       output += "\nstack reg_Ha_cal_%s rej %d %d -norm=addscale -output_norm -out=Ha_%s" %(options.light.rstrip('/'), int(slow), int(shigh), options.dsoname)
@@ -183,7 +183,7 @@ if __name__ == "__main__":
     
     # extract_HaOIII pp_light
     if options.extract_ha_oiii==True:
-      output += "\nextract_HaOIII cal_%s" %options.light.rstrip('/')
+      output += "\nseqextract_HaOIII cal_%s" %options.light.rstrip('/')
       output += "\nregister Ha_%s -prefix=reg_" %options.light.rstrip('/')
       output += "\nregister OIII_%s -prefix=reg_" %options.light.rstrip('/')
       output += "\nstack reg_Ha_%s rej %d %d -norm=addscale -output_norm -out=Ha_%s" %(options.light.rstrip('/'), int(slow), int(shigh), options.dsoname)      
