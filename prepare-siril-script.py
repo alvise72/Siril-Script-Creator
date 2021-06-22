@@ -99,7 +99,10 @@ if __name__ == "__main__":
   #debayer=''
   #if options.raw == True:
   #  debayer=' -debayer -cfa'
-
+  if options.extract_ha_oiii == False:
+    color_options = '-cfa -equalize_cfa -debayer'
+  else:
+    color_options = '-cfa -equalize_cfa'
   output = "requires 0.99.8\n#set32bits\nsetmem 0.5"
 
   if options.cpu is not None:
@@ -146,10 +149,10 @@ if __name__ == "__main__":
     output += "\n# FLAT\ncd %s\nconvert %s -out=../Siril \ncd ../Siril" %(options.flat.rstrip('/'), options.flat.rstrip('/'))
     if options.darkflat is not None:
       if master_darkflat == True:
-        output += "\npreprocess %s -dark=%s -cfa -equalize_cfa -debayer -prefix=cal_ " %(options.flat.rstrip('/'), os.path.abspath(options.darkflat) )
+        output += "\npreprocess %s -dark=%s %s -prefix=cal_ " %(options.flat.rstrip('/'), os.path.abspath(options.darkflat), color_options )
         output += "\nstack cal_%s median -norm=mul -out=master-%s" %(options.flat.rstrip('/'), options.flat.rstrip('/'))
       else:
-        output += "\npreprocess %s -dark=master-DarkFlat -cfa -equalize_cfa -debayer -prefix=cal_ " %options.flat.rstrip('/')
+        output += "\npreprocess %s -dark=master-DarkFlat %s -prefix=cal_ " %(options.flat.rstrip('/'), color_options)
         output += "\nstack cal_%s median -norm=mul -out=master-%s" %(options.flat.rstrip('/'), options.flat.rstrip('/'))
     else:
       output += "\nstack %s median -norm=mul -out=master-%s" %(options.flat.rstrip('/'), options.flat.rstrip('/'))
@@ -159,7 +162,7 @@ if __name__ == "__main__":
   
   output += "\n# LIGHT\ncd %s\nconvert %s -out=../Siril \ncd ../Siril" % (options.light.rstrip('/'), options.light.rstrip('/'))
   if options.dark is not None or options.flat is not None:
-    output += "\npreprocess %s -cfa -equalize_cfa -debayer -prefix=cal_" %options.light.rstrip('/')
+    output += "\npreprocess %s %s -prefix=cal_" %(options.light.rstrip('/'), color_options)
     if options.dark is not None:
       if master_dark == True:
         output += " -dark=%s" %os.path.abspath(options.dark)
