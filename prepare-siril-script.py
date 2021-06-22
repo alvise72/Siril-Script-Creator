@@ -166,7 +166,7 @@ if __name__ == "__main__":
   output += "\nsavetif %s" %options.dsoname
   output += "\nsavepng %s" %options.dsoname
   output += "\nsavetif32 %s_32" %options.dsoname
-  output += "\nsavejpg %s 100" %options.dsoname
+  #output += "\nsavejpg %s 100" %options.dsoname
 
   if options.output is not None:
     with open(options.output, 'w') as f:
