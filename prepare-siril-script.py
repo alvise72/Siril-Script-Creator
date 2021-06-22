@@ -3,6 +3,7 @@
 import argparse
 import sys
 import os
+import re
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser(description="Tool to produce Siril script file")
