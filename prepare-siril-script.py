@@ -158,11 +158,11 @@ if __name__ == "__main__":
       output += "\nextract_HaOIII cal_%s" %options.light.rstrip('/')
       output += "\nregister Ha_cal_%s -prefix=reg_" %options.light.rstrip('/')
       output += "\nregister OIII_cal_%s -prefix=reg_" %options.light.rstrip('/')
-      output += "\nstack reg_Ha_cal_%s rej 3 4 -norm=addscale -output_norm -out=Ha_%s" %(options.light.rstrip('/'), options.dsoname)
-      output += "\nstack reg_OIII_cal_%s rej 3 4 -norm=addscale -output_norm -out=OIII_%s" %(options.light.rstrip('/'), options.dsoname)
+      output += "\nstack reg_Ha_cal_%s rej 5 2 -norm=addscale -output_norm -out=Ha_%s" %(options.light.rstrip('/'), options.dsoname)
+      output += "\nstack reg_OIII_cal_%s rej 5 2 -norm=addscale -output_norm -out=OIII_%s" %(options.light.rstrip('/'), options.dsoname)
     else:
       output += "\nregister cal_%s -prefix=reg_" %options.light.rstrip('/')
-      output += "\nstack reg_cal_%s rej 3 4 -norm=addscale -output_norm -out=%s" %(options.light.rstrip('/'), options.dsoname)
+      output += "\nstack reg_cal_%s rej 5 2 -norm=addscale -output_norm -out=%s" %(options.light.rstrip('/'), options.dsoname)
       
   else:
     
@@ -171,11 +171,11 @@ if __name__ == "__main__":
       output += "\nextract_HaOIII cal_%s" %options.light.rstrip('/')
       output += "\nregister Ha_%s -prefix=reg_" %options.light.rstrip('/')
       output += "\nregister OIII_%s -prefix=reg_" %options.light.rstrip('/')
-      output += "\nstack reg_Ha_%s rej 3 4 -norm=addscale -output_norm -out=Ha_%s" %(options.light.rstrip('/'), options.dsoname)      
-      output += "\nstack reg_OIII_%s rej 3 4 -norm=addscale -output_norm -out=OIII_%s" %(options.light.rstrip('/'), options.dsoname)
+      output += "\nstack reg_Ha_%s rej 5 2 -norm=addscale -output_norm -out=Ha_%s" %(options.light.rstrip('/'), options.dsoname)      
+      output += "\nstack reg_OIII_%s rej 5 2 -norm=addscale -output_norm -out=OIII_%s" %(options.light.rstrip('/'), options.dsoname)
     else:
       output += "\nregister %s -prefix=reg_" %options.light.rstrip('/')
-      output += "\nstack reg_%s rej 3 4 -norm=addscale -output_norm -out=%s" %(options.light.rstrip('/'), options.dsoname)
+      output += "\nstack reg_%s rej 5 2 -norm=addscale -output_norm -out=%s" %(options.light.rstrip('/'), options.dsoname)
 
   output += "\nclose"
   if options.extract_ha_oiii==True:
