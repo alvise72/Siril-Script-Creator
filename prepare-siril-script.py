@@ -154,7 +154,7 @@ if __name__ == "__main__":
       output += " -flat=master-%s" %options.flat.rstrip('/')
     
     # extract_HaOIII pp_light
-    if extract_ha_oiii==True:
+    if options.extract_ha_oiii==True:
       output += "\nextract_HaOIII cal_%s" %options.light.rstrip('/')
       output += "\nregister Ha_cal_%s -prefix=reg_" %options.light.rstrip('/')
       output += "\nregister OIII_cal_%s -prefix=reg_" %options.light.rstrip('/')
@@ -167,7 +167,7 @@ if __name__ == "__main__":
   else:
     
     # extract_HaOIII pp_light
-    if extract_ha_oiii==True:
+    if options.extract_ha_oiii==True:
       output += "\nextract_HaOIII cal_%s" %options.light.rstrip('/')
       output += "\nregister Ha_%s -prefix=reg_" %options.light.rstrip('/')
       output += "\nregister OIII_%s -prefix=reg_" %options.light.rstrip('/')
@@ -178,7 +178,7 @@ if __name__ == "__main__":
       output += "\nstack reg_%s rej 3 4 -norm=addscale -output_norm -out=%s" %(options.light.rstrip('/'), options.dsoname)
 
   output += "\nclose"
-  if extract_ha_oiii==True:
+  if options.extract_ha_oiii==True:
     output += "\ncd ..\nload Siril/Ha_%s.fit" %options.dsoname
     output += "\nsave Ha_%s" %options.dsoname
     output += "\nsavetif Ha_%s" %options.dsoname
