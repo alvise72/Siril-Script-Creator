@@ -63,14 +63,14 @@ if __name__ == "__main__":
                       metavar='DeepSpace Object Name',
                       type=str,
                       help="Specify the mandatory name of the deep sky object name")
-  #parser.add_argument('-n',
-  #        		'--extract-narrow-bands',
-  #        		action='store_true',
-  #        		dest='extract_narrow',
-  #        		required=False,
-  #        		default=False,
-  #        		help='extract Hydrogen-alpha abd Oxygen-III channels'
-  #        		)
+  parser.add_argument('-E',
+          		'--extract-ha-oiii',
+          		action='store_true',
+          		dest='extract_ha_oiii',
+          		required=False,
+          		default=False,
+          		help='extract Hydrogen-alpha and Oxygen-III channels'
+          		)
 #  parser.add_argument(  '-O',
 #  			'--extract-o3',
 #  			action='store_true',
@@ -152,20 +152,49 @@ if __name__ == "__main__":
         output += " -dark=master-%s" %options.dark.rstrip('/')
     if options.flat is not None:
       output += " -flat=master-%s" %options.flat.rstrip('/')
-    #output += " -cfa -equalize_cfa -debayer -prefix=cal_ "
-    output += "\nregister cal_%s -prefix=reg_" %options.light.rstrip('/')
-    output += "\nstack reg_cal_%s rej 3 4 -norm=addscale -output_norm -out=%s" %(options.light.rstrip('/'), options.dsoname)
+    
+    # extract_HaOIII pp_light
+    if extract_ha_oiii==True:
+      output += "\nextract_HaOIII cal_%s" %options.light.rstrip('/')
+      output += "\nregister Ha_cal_%s -prefix=reg_" %options.light.rstrip('/')
+      output += "\nregister OIII_cal_%s -prefix=reg_" %options.light.rstrip('/')
+      output += "\nstack reg_Ha_cal_%s rej 3 4 -norm=addscale -output_norm -out=Ha_%s" %(options.light.rstrip('/'), options.dsoname)
+      output += "\nstack reg_OIII_cal_%s rej 3 4 -norm=addscale -output_norm -out=OIII_%s" %(options.light.rstrip('/'), options.dsoname)
+    else:
+      output += "\nregister cal_%s -prefix=reg_" %options.light.rstrip('/')
+      output += "\nstack reg_cal_%s rej 3 4 -norm=addscale -output_norm -out=%s" %(options.light.rstrip('/'), options.dsoname)
+      
   else:
-    output += "\nregister %s -prefix=reg_" %options.light.rstrip('/')
-    output += "\nstack reg_%s rej 3 4 -norm=addscale -output_norm -out=%s" %(options.light.rstrip('/'), options.dsoname)
+    
+    # extract_HaOIII pp_light
+    if extract_ha_oiii==True:
+      output += "\nextract_HaOIII cal_%s" %options.light.rstrip('/')
+      output += "\nregister Ha_%s -prefix=reg_" %options.light.rstrip('/')
+      output += "\nregister OIII_%s -prefix=reg_" %options.light.rstrip('/')
+      output += "\nstack reg_Ha_%s rej 3 4 -norm=addscale -output_norm -out=Ha_%s" %(options.light.rstrip('/'), options.dsoname)      
+      output += "\nstack reg_OIII_%s rej 3 4 -norm=addscale -output_norm -out=OIII_%s" %(options.light.rstrip('/'), options.dsoname)
+    else:
+      output += "\nregister %s -prefix=reg_" %options.light.rstrip('/')
+      output += "\nstack reg_%s rej 3 4 -norm=addscale -output_norm -out=%s" %(options.light.rstrip('/'), options.dsoname)
 
   output += "\nclose"
-
-  output += "\ncd ..\nload Siril/%s.fit" %options.dsoname
-  output += "\nsave %s" %options.dsoname
-  output += "\nsavetif %s" %options.dsoname
-  output += "\nsavepng %s" %options.dsoname
-  output += "\nsavetif32 %s_32" %options.dsoname
+  if extract_ha_oiii==True:
+    output += "\ncd ..\nload Siril/Ha_%s.fit" %options.dsoname
+    output += "\nsave Ha_%s" %options.dsoname
+    output += "\nsavetif Ha_%s" %options.dsoname
+    output += "\nsavepng Ha_%s" %options.dsoname
+    output += "\nsavetif32 Ha_%s_32" %options.dsoname  
+    output += "\ncd ..\nload Siril/OIII_%s.fit" %options.dsoname
+    output += "\nsave OIII_%s" %options.dsoname
+    output += "\nsavetif OIII_%s" %options.dsoname
+    output += "\nsavepng OIII_%s" %options.dsoname
+    output += "\nsavetif32 OIII_%s_32" %options.dsoname
+  else:
+    output += "\ncd ..\nload Siril/%s.fit" %options.dsoname
+    output += "\nsave %s" %options.dsoname
+    output += "\nsavetif %s" %options.dsoname
+    output += "\nsavepng %s" %options.dsoname
+    output += "\nsavetif32 %s_32" %options.dsoname
   #output += "\nsavejpg %s 100" %options.dsoname
 
   if options.output is not None:
