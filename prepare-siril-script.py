@@ -63,21 +63,21 @@ if __name__ == "__main__":
                       metavar='DeepSpace Object Name',
                       type=str,
                       help="Specify the mandatory name of the deep sky object name")
-  parser.add_argument('-H',
-          		'--extract-ha',
-          		action='store_true',
-          		dest='ha',
-          		required=False,
-          		default=False,
-          		help='extract Hydrogen-alpha channel'
-          		)
-  parser.add_argument(  '-O',
-  			'--extract-o3',
-  			action='store_true',
-  			dest='oiii',
-  			required=False,
-  			default=False,
-  			help='extract Oxygen-III channel' )
+  #parser.add_argument('-n',
+  #        		'--extract-narrow-bands',
+  #        		action='store_true',
+  #        		dest='extract_narrow',
+  #        		required=False,
+  #        		default=False,
+  #        		help='extract Hydrogen-alpha abd Oxygen-III channels'
+  #        		)
+#  parser.add_argument(  '-O',
+#  			'--extract-o3',
+#  			action='store_true',
+#  			dest='oiii',
+#  			required=False,
+#  			default=False,
+#  			help='extract Oxygen-III channel' )
           		
   options = parser.parse_args()
 
