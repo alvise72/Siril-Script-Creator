@@ -131,10 +131,10 @@ if __name__ == "__main__":
     output += "\n# FLAT\ncd %s\nconvert %s -out=../Siril \ncd ../Siril" %(options.flat.rstrip('/'), options.flat.rstrip('/'))
     if options.darkflat is not None:
       if master_darkflat == True:
-        output += "\npreprocess %s -dark=%s -prefix=cal_ " %(options.flat.rstrip('/'), os.path.abspath(options.darkflat) )
+        output += "\npreprocess %s -dark=%s -cfa -equalize_cfa -debayer -prefix=cal_ " %(options.flat.rstrip('/'), os.path.abspath(options.darkflat) )
         output += "\nstack cal_%s median -norm=mul -out=master-%s" %(options.flat.rstrip('/'), options.flat.rstrip('/'))
       else:
-        output += "\npreprocess %s -dark=master-DarkFlat -prefix=cal_ " %options.flat.rstrip('/')
+        output += "\npreprocess %s -dark=master-DarkFlat -cfa -equalize_cfa -debayer -prefix=cal_ " %options.flat.rstrip('/')
         output += "\nstack cal_%s median -norm=mul -out=master-%s" %(options.flat.rstrip('/'), options.flat.rstrip('/'))
     else:
       output += "\nstack %s median -norm=mul -out=master-%s" %(options.flat.rstrip('/'), options.flat.rstrip('/'))
@@ -144,7 +144,7 @@ if __name__ == "__main__":
   
   output += "\n# LIGHT\ncd %s\nconvert %s -out=../Siril \ncd ../Siril" % (options.light.rstrip('/'), options.light.rstrip('/'))
   if options.dark is not None or options.flat is not None:
-    output += "\npreprocess %s" %options.light.rstrip('/')
+    output += "\npreprocess %s -cfa -equalize_cfa -debayer " %options.light.rstrip('/')
     if options.dark is not None:
       if master_dark == True:
         output += " -dark=%s" %os.path.abspath(options.dark)
@@ -152,7 +152,7 @@ if __name__ == "__main__":
         output += " -dark=master-%s" %options.dark.rstrip('/')
     if options.flat is not None:
       output += " -flat=master-%s" %options.flat.rstrip('/')
-    output += " -cfa -equalize_cfa -prefix=cal_ "
+    #output += " -cfa -equalize_cfa -debayer -prefix=cal_ "
     output += "\nregister cal_%s -prefix=reg_" %options.light.rstrip('/')
     output += "\nstack reg_cal_%s rej 3 4 -norm=addscale -output_norm -out=%s" %(options.light.rstrip('/'), options.dsoname)
   else:
