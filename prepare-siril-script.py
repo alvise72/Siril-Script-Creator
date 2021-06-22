@@ -173,7 +173,7 @@ if __name__ == "__main__":
       output += "\nregister Ha_cal_%s -prefix=reg_" %options.light.rstrip('/')
       output += "\nregister OIII_cal_%s -prefix=reg_" %options.light.rstrip('/')
       output += "\nstack reg_Ha_cal_%s rej %d %d -norm=addscale -output_norm -out=Ha_%s" %(options.light.rstrip('/'), int(slow), int(shigh), options.dsoname)
-      output += "\nstack reg_OIII_cal_%s rej %d %d -norm=addscale -output_norm -out=OIII_%s" %(options.light.rstrip('/'), options.dsoname)
+      output += "\nstack reg_OIII_cal_%s rej %d %d -norm=addscale -output_norm -out=OIII_%s" %(options.light.rstrip('/'), int(slow), int(shigh), options.dsoname)
     else:
       output += "\nregister cal_%s -prefix=reg_" %options.light.rstrip('/')
       output += "\nstack reg_cal_%s rej %d %d -norm=addscale -output_norm -out=%s" %(options.light.rstrip('/'), int(slow), int(shigh), options.dsoname)
