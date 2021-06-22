@@ -144,7 +144,7 @@ if __name__ == "__main__":
   
   output += "\n# LIGHT\ncd %s\nconvert %s -out=../Siril \ncd ../Siril" % (options.light.rstrip('/'), options.light.rstrip('/'))
   if options.dark is not None or options.flat is not None:
-    output += "\npreprocess %s -cfa -equalize_cfa -debayer " %options.light.rstrip('/')
+    output += "\npreprocess %s -cfa -equalize_cfa -debayer -prefix=cal_" %options.light.rstrip('/')
     if options.dark is not None:
       if master_dark == True:
         output += " -dark=%s" %os.path.abspath(options.dark)
