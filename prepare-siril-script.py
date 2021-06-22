@@ -65,6 +65,14 @@ if __name__ == "__main__":
                       help="Specify the mandatory name of the deep sky object name")
   parser.add_argument('-E',
           		'--extract-ha-oiii',
+          		type=str,
+          		dest='sigmaclip',
+          		required=False,
+          		default="5,2",
+          		help='Specify custom sigma low,high clipping parameters (format is #,#)'
+          		)
+  parser.add_argument('-S',
+          		'--sigma-clipping',
           		action='store_true',
           		dest='extract_ha_oiii',
           		required=False,
@@ -81,6 +89,12 @@ if __name__ == "__main__":
           		
   options = parser.parse_args()
 
+  if options.sigmaclip != "5,2":
+    if re.match('^[0-9]+,[0-9]+$', options.sigmaclip) == False:
+      print("Bad format for sigma clipping parameters %s. Must be: 'number,number' specifying low,high sigma clipping. Stop!" %options.sigmaclip)
+      sys.exit(1)  
+  slow = options.sigmaclip.split(",")[0]
+  shigh = options.sigmaclip.split(",")[1]
   #debayer=''
   #if options.raw == True:
   #  debayer=' -debayer -cfa'
@@ -158,11 +172,11 @@ if __name__ == "__main__":
       output += "\nextract_HaOIII cal_%s" %options.light.rstrip('/')
       output += "\nregister Ha_cal_%s -prefix=reg_" %options.light.rstrip('/')
       output += "\nregister OIII_cal_%s -prefix=reg_" %options.light.rstrip('/')
-      output += "\nstack reg_Ha_cal_%s rej 5 2 -norm=addscale -output_norm -out=Ha_%s" %(options.light.rstrip('/'), options.dsoname)
-      output += "\nstack reg_OIII_cal_%s rej 5 2 -norm=addscale -output_norm -out=OIII_%s" %(options.light.rstrip('/'), options.dsoname)
+      output += "\nstack reg_Ha_cal_%s rej %d %d -norm=addscale -output_norm -out=Ha_%s" %(options.light.rstrip('/'), int(slow), int(shigh), options.dsoname)
+      output += "\nstack reg_OIII_cal_%s rej %d %d -norm=addscale -output_norm -out=OIII_%s" %(options.light.rstrip('/'), options.dsoname)
     else:
       output += "\nregister cal_%s -prefix=reg_" %options.light.rstrip('/')
-      output += "\nstack reg_cal_%s rej 5 2 -norm=addscale -output_norm -out=%s" %(options.light.rstrip('/'), options.dsoname)
+      output += "\nstack reg_cal_%s rej %d %d -norm=addscale -output_norm -out=%s" %(options.light.rstrip('/'), int(slow), int(shigh), options.dsoname)
       
   else:
     
@@ -171,11 +185,11 @@ if __name__ == "__main__":
       output += "\nextract_HaOIII cal_%s" %options.light.rstrip('/')
       output += "\nregister Ha_%s -prefix=reg_" %options.light.rstrip('/')
       output += "\nregister OIII_%s -prefix=reg_" %options.light.rstrip('/')
-      output += "\nstack reg_Ha_%s rej 5 2 -norm=addscale -output_norm -out=Ha_%s" %(options.light.rstrip('/'), options.dsoname)      
-      output += "\nstack reg_OIII_%s rej 5 2 -norm=addscale -output_norm -out=OIII_%s" %(options.light.rstrip('/'), options.dsoname)
+      output += "\nstack reg_Ha_%s rej %d %d -norm=addscale -output_norm -out=Ha_%s" %(options.light.rstrip('/'), int(slow), int(shigh), options.dsoname)      
+      output += "\nstack reg_OIII_%s rej %d %d -norm=addscale -output_norm -out=OIII_%s" %(options.light.rstrip('/'), int(slow), int(shigh), options.dsoname)
     else:
       output += "\nregister %s -prefix=reg_" %options.light.rstrip('/')
-      output += "\nstack reg_%s rej 5 2 -norm=addscale -output_norm -out=%s" %(options.light.rstrip('/'), options.dsoname)
+      output += "\nstack reg_%s rej %d %d -norm=addscale -output_norm -out=%s" %(options.light.rstrip('/'), int(slow), int(shigh), options.dsoname)
 
   output += "\nclose"
   if options.extract_ha_oiii==True:
