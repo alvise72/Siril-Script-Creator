@@ -184,7 +184,7 @@ if __name__ == "__main__":
     output += "\nsavetif Ha_%s" %options.dsoname
     output += "\nsavepng Ha_%s" %options.dsoname
     output += "\nsavetif32 Ha_%s_32" %options.dsoname  
-    output += "\ncd ..\nload Siril/OIII_%s.fit" %options.dsoname
+    output += "\n\nload Siril/OIII_%s.fit" %options.dsoname
     output += "\nsave OIII_%s" %options.dsoname
     output += "\nsavetif OIII_%s" %options.dsoname
     output += "\nsavepng OIII_%s" %options.dsoname
